@@ -1,0 +1,15 @@
+.primary-btn {
+  @apply px-3 py-2 border-2 font-semibold border-secondary-600 text-secondary-600 tracking-wider hover:bg-secondary-600 hover:text-white duration-200;
+}
+
+.primary-btn-contained {
+  @apply px-3 py-2 border-2 font-semibold bg-secondary-600 border-secondary-600 text-white tracking-wider hover:bg-white hover:text-secondary-600 duration-200;
+}
+
+.secondary-btn {
+  @apply px-3 py-2 border-2 font-semibold border-primary-300 text-primary-300 tracking-wider disabled:border-grey-500 disabled:text-grey-500 disabled:cursor-not-allowed hover:bg-primary-300 hover:text-white disabled:hover:text-grey-500 disabled:hover:bg-white duration-200;
+}
+
+.icon {
+  @apply flex justify-center items-center leading-none w-10 h-10 rounded-full hover:bg-[rgba(0,0,0,0.2)];
+}

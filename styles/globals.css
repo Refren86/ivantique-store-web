@@ -1,0 +1,36 @@
+@import url('https://fonts.googleapis.com/css2?family=Merriweather+Sans:wght@400;500;600;700&display=swap');
+
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+*,
+*::before,
+*::after {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+html {
+  font-family: 'Merriweather Sans', sans-serif;
+}
+
+body {
+  color: #333232;
+  background-color: #f7f7f7;
+}
+
+a {
+  display: block;
+  color: inherit;
+  text-decoration: none;
+}
+
+ul > li {
+  line-height: 0;
+}
+
+.wrapper {
+  @apply max-w-7xl sm:mx-auto p-4;
+}
