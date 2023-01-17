@@ -22,7 +22,7 @@ export const Home = ({ slides, categories }) => {
         animationHandler="fade"
         className="h-[calc(100vh-72px)]"
       >
-        {slides.map((slide) => (
+        {slides?.map((slide) => (
           <div
             key={uid()}
             className="relative min-w-screen w-full h-[calc(100vh-72px)]"
@@ -47,7 +47,7 @@ export const Home = ({ slides, categories }) => {
         <h2 className="font-bold text-3xl mb-3">Категорії товарів</h2>
 
         <div className="grid gap-6 sm:grid-cols-2 md:grid-cols-3">
-          {categories.map((category) => (
+          {categories?.map((category) => (
             <Link href={`/${category.slug}`} key={uid()}>
               <a>
                 <div className="group relative h-[300px] rounded-md shadow-xl overflow-hidden">

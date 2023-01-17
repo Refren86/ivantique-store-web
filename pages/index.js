@@ -17,11 +17,19 @@ const HomePage = ({ sliderContents, categories }) => {
 export default HomePage;
 
 export async function getStaticProps(context) {
-  const { data } = await apolloClient.query({
-    query: GET_SLIDES_AND_CATEGORIES,
-  });
+  try {
+    const { data } = await apolloClient.query({
+      query: GET_SLIDES_AND_CATEGORIES,
+    });
 
-  return {
-    props: data,
-  };
+    return {
+      props: data,
+    };
+  } catch (err) {
+    console.log('Error >>>', err);
+
+    return {
+      props: {},
+    };
+  }
 }
