@@ -13,7 +13,7 @@ export const Input = ({
         id={id}
         name={id}
         onChange={onChange}
-        className="peer h-10 w-full border-b-2 border-grey-400 text-grey-900 placeholder-transparent focus:outline-none focus:border-secondary-500"
+        className="peer px-2 h-10 w-full border-b-2 border-grey-400 text-grey-900 placeholder-transparent focus:outline-none focus:border-secondary-500"
         {...register?.(id, { required })}
         {...otherProps}
       />
@@ -21,7 +21,7 @@ export const Input = ({
       {label && (
         <label
           htmlFor={id}
-          className="absolute pointer-events-none left-0 -top-3.5 text-grey-800 text-xs transition-all peer-placeholder-shown:text-sm peer-placeholder-shown:text-gray-400 peer-placeholder-shown:top-2 peer-focus:-top-3.5 peer-focus:text-gray-700 peer-focus:text-xs"
+          className="absolute pointer-events-none left-2 -top-4 text-grey-800 text-xs transition-all peer-placeholder-shown:text-sm peer-placeholder-shown:text-gray-400 peer-placeholder-shown:top-2 peer-focus:-top-4 peer-focus:left-0 peer-focus:text-gray-700 peer-focus:text-xs"
         >
           {label}
         </label>
