@@ -1,6 +1,6 @@
-const { model, Schema } = require('mongoose');
+import mongoose from 'mongoose';
 
-const styleSchema = new Schema({
+const styleSchema = new mongoose.Schema({
   name: {
     type: String,
     trim: true,
@@ -8,4 +8,7 @@ const styleSchema = new Schema({
   },
 });
 
-module.exports = model('style', styleSchema);
+const StyleModel =
+  mongoose.models.style || mongoose.model('style', styleSchema);
+
+export default StyleModel;

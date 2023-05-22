@@ -1,5 +1,5 @@
 export default function handler(req, res) {
-  if (req.method === 'POST') {
+  if (req.method === 'GET') {
     const body = req.body;
 
     console.log(`body >>>`, body);

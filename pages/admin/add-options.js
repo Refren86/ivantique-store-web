@@ -6,6 +6,7 @@ const AddOptionsPage = () => {
     style: '',
     century: '',
     country: '',
+    material: '',
   });
 
   const handleChange = (e) => {
@@ -40,7 +41,13 @@ const AddOptionsPage = () => {
     setOptionsToAdd((prevOptions) => ({ ...prevOptions, country: '' }));
   };
 
-  console.log(optionsToAdd);
+  const addMaterial = async () => {
+    await fetch('/api/admin/add-material', {
+      method: 'post',
+      body: optionsToAdd.material,
+    });
+    setOptionsToAdd((prevOptions) => ({ ...prevOptions, material: '' }));
+  };
 
   return (
     <AdminLayout>
@@ -91,6 +98,22 @@ const AddOptionsPage = () => {
           />
 
           <Button onClick={addCountry} variant="secondary-btn">
+            Додати
+          </Button>
+        </div>
+
+        <div>
+          <h2 className="text-grey-900 font-semibold text-xl">Додати матеріал</h2>
+
+          <Input
+            id="material"
+            label="Назва матеріалу"
+            placeholder="Назва матеріалу"
+            value={optionsToAdd.material}
+            onChange={handleChange}
+          />
+
+          <Button onClick={addMaterial} variant="secondary-btn">
             Додати
           </Button>
         </div>

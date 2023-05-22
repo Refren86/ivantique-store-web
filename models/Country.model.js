@@ -1,6 +1,6 @@
-import { Schema, model } from 'mongoose';
+import mongoose from 'mongoose';
 
-const countrySchema = new Schema({
+const countrySchema = new mongoose.Schema({
   name: {
     type: String,
     trim: true,
@@ -8,4 +8,7 @@ const countrySchema = new Schema({
   },
 });
 
-export default model('country', countrySchema);
+const CountryModel =
+  mongoose.models.country || mongoose.model('country', countrySchema);
+
+export default CountryModel;

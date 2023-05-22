@@ -1,6 +1,6 @@
-import { Schema, model } from 'mongoose';
+import mongoose from 'mongoose';
 
-const centurySchema = new Schema({
+const centurySchema = new mongoose.Schema({
   name: {
     type: String,
     trim: true,
@@ -8,4 +8,7 @@ const centurySchema = new Schema({
   },
 });
 
-export const CenturySchema = model('century', centurySchema);
+const CenturyModel =
+  mongoose.models.century || mongoose.model('century', centurySchema);
+
+export default CenturyModel;

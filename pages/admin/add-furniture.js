@@ -1,14 +1,41 @@
 import Image from 'next/image';
 import { toast } from 'react-hot-toast';
-import { useRef, useState } from 'react';
+import { useEffect, useRef, useState } from 'react';
 import { useForm } from 'react-hook-form';
 
 import { Button, Input, Dropdown, AdminLayout } from 'components';
+import { CheckboxDropdown } from 'components/CheckboxDropdown/CheckboxDropdown';
 
 const AddFurniturePage = () => {
   const { register, handleSubmit } = useForm();
-  const [images, setImages] = useState(Array(10).fill(null));
   const fileInputRef = useRef(null);
+
+  const [images, setImages] = useState(Array(10).fill(null));
+  const [options, setOptions] = useState({
+    styles: [],
+    centuries: [],
+    countries: [],
+    materials: [],
+  });
+  const [selectedOptions, setSelectedOptions] = useState({
+    style: '',
+    century: '',
+    country: '',
+    materials: [],
+  });
+
+  useEffect(() => {
+    fetch('/api/admin/get-options')
+      .then((res) => res.json())
+      .then((data) =>
+        setOptions({
+          styles: data.styles.map((style) => style.name),
+          centuries: data.centuries.map((century) => century.name),
+          countries: data.countries.map((country) => country.name),
+          materials: data.materials.map((material) => material.name),
+        })
+      );
+  }, []);
 
   const handleDrop = (event, index) => {
     event.preventDefault();
@@ -71,12 +98,43 @@ const AddFurniturePage = () => {
   };
 
   const onSubmit = async (data) => {
-    console.log('clicked');
     await fetch('/api/admin/furniture', {
       method: 'POST',
       body: JSON.stringify(data),
     });
   };
+
+  const handleStyleSelect = (value) => {
+    setSelectedOptions((prevOptions) => ({ ...prevOptions, style: value }));
+  };
+
+  const handleCenturySelect = (value) => {
+    setSelectedOptions((prevOptions) => ({ ...prevOptions, century: value }));
+  };
+
+  const handleCountrySelect = (value) => {
+    setSelectedOptions((prevOptions) => ({ ...prevOptions, country: value }));
+  };
+
+  const handleMaterialSelect = (selectedMaterial) => {
+    setSelectedOptions((prevOptions) => {
+      if (prevOptions.materials.includes(selectedMaterial)) {
+        return {
+          ...prevOptions,
+          materials: prevOptions.materials.filter(
+            (material) => material !== selectedMaterial
+          ),
+        };
+      } else {
+        return {
+          ...prevOptions,
+          materials: [...prevOptions.materials, selectedMaterial],
+        };
+      }
+    });
+  };
+
+  console.log(selectedOptions);
 
   return (
     <AdminLayout>
@@ -131,12 +189,38 @@ const AddFurniturePage = () => {
             label="Глибина"
             placeholder="Глибина"
           />
-
-          <Dropdown label="Країна" />
-          <Dropdown label="Століття" />
-          <Dropdown label="Стиль" />
         </div>
-        {/* <Dropdown label="Матеріали" /> */}
+
+        <div className='grid grid-cols-4 gap-x-4'>
+          <Dropdown
+            label="Стиль"
+            options={options?.styles}
+            placeholder="Оберіть стиль"
+            selectedOption={selectedOptions.style}
+            onSelect={handleStyleSelect}
+          />
+          <Dropdown
+            label="Століття"
+            options={options?.centuries}
+            placeholder="Оберіть століття"
+            onSelect={handleCenturySelect}
+            selectedOption={selectedOptions.century}
+          />
+          <Dropdown
+            label="Країна"
+            options={options?.countries}
+            placeholder="Оберіть країну"
+            selectedOption={selectedOptions.country}
+            onSelect={handleCountrySelect}
+          />
+          <CheckboxDropdown
+            label="Матеріали"
+            options={options?.materials}
+            selectedOptions={selectedOptions?.materials}
+            placeholder="Оберіть матеріали"
+            onSelect={handleMaterialSelect}
+          />
+        </div>
 
         <div className="flex justify-between items-center my-4">
           <h4 className="text-lg">Оберіть фото</h4>
@@ -149,7 +233,7 @@ const AddFurniturePage = () => {
           {images.map((image, index) => (
             <div
               key={index}
-              className="border-[2px] flex justify-center items-center border-dashed border-secondary-800 rounded-[10px] min-h-[200px] relative"
+              className="border-[2px] flex justify-center items-center border-dashed border-primary-600 rounded-[10px] min-h-[200px] relative"
               onDrop={(event) => handleDrop(event, index)}
               onDragOver={(event) => event.preventDefault()}
             >
