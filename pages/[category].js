@@ -4,8 +4,6 @@ import { apolloClient } from 'utils/services';
 import { GET_FURNITURE_BY_CATEGORY } from 'utils/queries';
 
 const Category = ({ furnitures }) => {
-  console.log(furnitures);
-
   return (
     <Layout>
       {furnitures.data?.length > 0 ? (

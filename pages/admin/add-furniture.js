@@ -1,13 +1,18 @@
 import Image from 'next/image';
 import { toast } from 'react-hot-toast';
-import { useEffect, useRef, useState } from 'react';
 import { useForm } from 'react-hook-form';
+import { useEffect, useRef, useState } from 'react';
 
-import { Button, Input, Dropdown, AdminLayout } from 'components';
-import { CheckboxDropdown } from 'components/CheckboxDropdown/CheckboxDropdown';
+import {
+  Button,
+  Input,
+  Dropdown,
+  CheckboxDropdown,
+  AdminLayout,
+} from 'components';
 
 const AddFurniturePage = () => {
-  const { register, handleSubmit } = useForm();
+  const { register, handleSubmit, reset } = useForm();
   const fileInputRef = useRef(null);
 
   const [images, setImages] = useState(Array(10).fill(null));
@@ -29,10 +34,10 @@ const AddFurniturePage = () => {
       .then((res) => res.json())
       .then((data) =>
         setOptions({
-          styles: data.styles.map((style) => style.name),
-          centuries: data.centuries.map((century) => century.name),
-          countries: data.countries.map((country) => country.name),
-          materials: data.materials.map((material) => material.name),
+          styles: data.styles,
+          centuries: data.centuries,
+          countries: data.countries,
+          materials: data.materials,
         })
       );
   }, []);
@@ -97,11 +102,34 @@ const AddFurniturePage = () => {
     setImages(Array(10).fill(null));
   };
 
+  const resetForm = () => {
+    clearImages();
+    reset();
+    setSelectedOptions({
+      style: '',
+      century: '',
+      country: '',
+      materials: [],
+    });
+  };
+
   const onSubmit = async (data) => {
+    const formData = new FormData();
+    const filteredImages = images.filter(Boolean);
+
+    filteredImages.forEach((image, index) => {
+      formData.append(`image${index}`, image);
+    });
+
+    formData.append('data', JSON.stringify({ ...data, ...selectedOptions }));
+
     await fetch('/api/admin/furniture', {
       method: 'POST',
-      body: JSON.stringify(data),
+
+      body: formData,
     });
+
+    resetForm();
   };
 
   const handleStyleSelect = (value) => {
@@ -134,15 +162,17 @@ const AddFurniturePage = () => {
     });
   };
 
-  console.log(selectedOptions);
-
   return (
     <AdminLayout>
       <h2 className="text-grey-900 font-semibold text-xl">
         Додати нову мебель
       </h2>
 
-      <form onSubmit={handleSubmit(onSubmit)} className="mt-8">
+      <form
+        onSubmit={handleSubmit(onSubmit)}
+        className="mt-8"
+        encType="multipart/form-data"
+      >
         <div className="grid grid-cols-2 gap-x-6">
           <Input
             register={register}
@@ -191,7 +221,7 @@ const AddFurniturePage = () => {
           />
         </div>
 
-        <div className='grid grid-cols-4 gap-x-4'>
+        <div className="grid grid-cols-4 gap-x-4">
           <Dropdown
             label="Стиль"
             options={options?.styles}

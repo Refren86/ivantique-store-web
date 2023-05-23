@@ -13,6 +13,7 @@ export * from './Layout';
 export * from './AdminLayout';
 export * from './Accordion';
 export * from './Dropdown';
+export * from './CheckboxDropdown';
 export * from './Favourites';
 export * from './Furnitures';
 export * from './ReturnLink';

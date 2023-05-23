@@ -2,7 +2,7 @@ import Image from 'next/image';
 import { useState, useRef, useEffect } from 'react';
 
 export const CheckboxDropdown = ({
-  options = ['1', '2', '3'],
+  options = [],
   selectedOptions = [],
   onSelect,
   placeholder,
@@ -27,7 +27,7 @@ export const CheckboxDropdown = ({
   }, []);
 
   const handleSelect = (option) => {
-    onSelect(option);
+    onSelect(option._id);
   };
 
   const toggleDropdown = () => {
@@ -35,7 +35,7 @@ export const CheckboxDropdown = ({
   };
 
   const isChecked = (option) => {
-    return selectedOptions.includes(option);
+    return selectedOptions.includes(option._id);
   };
 
   return (
@@ -70,7 +70,7 @@ export const CheckboxDropdown = ({
             {options?.length > 0 &&
               options.map((option) => (
                 <label
-                  key={option}
+                  key={option._id}
                   className="flex items-center px-4 py-2 hover:bg-gray-100 transition-colors duration-200"
                 >
                   <div className="relative">
@@ -96,7 +96,7 @@ export const CheckboxDropdown = ({
                       )}
                     </div>
                   </div>
-                  <span className="ml-2 text-sm text-white">{option}</span>
+                  <span className="ml-2 text-sm text-white">{option.name}</span>
                 </label>
               ))}
           </div>

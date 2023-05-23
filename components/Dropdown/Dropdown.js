@@ -2,7 +2,7 @@ import Image from 'next/image';
 import { useEffect, useRef, useState } from 'react';
 
 export const Dropdown = ({
-  options = ['1', '2', '3'],
+  options = [],
   selectedOption,
   placeholder,
   onSelect = () => {},
@@ -47,7 +47,9 @@ export const Dropdown = ({
           onClick={toggleDropdown}
         >
           <span className="truncate">
-            {selectedOption ? selectedOption : placeholder}
+            {selectedOption
+              ? options.find((option) => option._id === selectedOption).name
+              : placeholder}
           </span>
 
           <Image
@@ -62,29 +64,18 @@ export const Dropdown = ({
           <div
             className={`absolute z-50 max-h-[300px] overflow-y-auto w-full py-1 mt-1 bg-[#1B1B1B] border border-[#535353] rounded-md shadow-md ${listClassnames}`}
           >
-            {/* <button
-              type="button"
-              className="block w-full py-1 pl-3 pr-9 text-left text-white hover:bg-gray-200 hover:bg-grey-600 focus:outline-none"
-              onClick={() => {
-                onSelect('');
-                setIsOpen(false);
-              }}
-            >
-              {placeholder}
-            </button> */}
-
             {options?.length > 0 &&
               options.map((option) => (
                 <button
                   type="button"
-                  key={option}
+                  key={option._id}
                   className="block w-full py-1 pl-3 pr-9 text-left text-white hover:bg-gray-200 hover:bg-grey-600 focus:outline-none"
                   onClick={() => {
-                    onSelect(option);
+                    onSelect(option._id);
                     setIsOpen(false);
                   }}
                 >
-                  {option}
+                  {option.name}
                 </button>
               ))}
           </div>
