@@ -28,6 +28,11 @@ const furnitureSchema = new mongoose.Schema(
     depth: {
       type: Number,
     },
+    images: [
+      {
+        type: String,
+      },
+    ],
     style: {
       type: mongoose.Schema.Types.ObjectId,
       ref: 'style',
@@ -40,10 +45,16 @@ const furnitureSchema = new mongoose.Schema(
       type: mongoose.Schema.Types.ObjectId,
       ref: 'country',
     },
-    materials: [{
+    materials: [
+      {
+        type: mongoose.Schema.Types.ObjectId,
+        ref: 'material',
+      },
+    ],
+    category: {
       type: mongoose.Schema.Types.ObjectId,
-      ref: 'materials',
-    }],
+      ref: 'category',
+    },
   },
   {
     timestamps: true,

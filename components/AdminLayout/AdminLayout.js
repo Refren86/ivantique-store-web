@@ -17,6 +17,8 @@ export const AdminLayout = ({ children }) => {
             <Link href="/admin/my-furniture">Мої меблі</Link>
             <Link href="/admin/add-furniture">Додати мебель</Link>
             <Link href="/admin/add-options">Додати опції</Link>
+            <Link href="/admin/edit-slider">Редагувати слайдер</Link>
+            <Link href="/admin/edit-categories">Редагувати категорії</Link>
           </nav>
         </aside>
 

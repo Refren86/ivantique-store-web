@@ -32,6 +32,10 @@ export const Dropdown = ({
     }
   }, []);
 
+  const fullSelectedOption = options.find(
+    (option) => option._id === selectedOption
+  );
+
   return (
     <div>
       {label && (
@@ -48,7 +52,7 @@ export const Dropdown = ({
         >
           <span className="truncate">
             {selectedOption
-              ? options.find((option) => option._id === selectedOption).name
+              ? fullSelectedOption?.name || fullSelectedOption?.title
               : placeholder}
           </span>
 
@@ -75,7 +79,7 @@ export const Dropdown = ({
                     setIsOpen(false);
                   }}
                 >
-                  {option.name}
+                  {option.name || option.title}
                 </button>
               ))}
           </div>

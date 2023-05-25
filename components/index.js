@@ -19,3 +19,5 @@ export * from './Furnitures';
 export * from './ReturnLink';
 export * from './FurnitureCard';
 export * from './FurnitureDetails';
+export * from './AdminFurnitureForm';
+export * from './ImageDropbox';

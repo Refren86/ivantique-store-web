@@ -2,26 +2,26 @@ import Link from 'next/link';
 import Image from 'next/image';
 import { useContext } from 'react';
 
-import { FavouritesContext, CartContext } from 'context';
 import { Button } from 'components/Button';
+import { FavouritesContext, CartContext } from 'context';
 
 export const FurnitureCard = ({ furniture }) => {
   const { addToCart } = useContext(CartContext);
   const { favourites, toggleFavourite } = useContext(FavouritesContext);
 
-  const { name, slug, oldPrice, newPrice, images } = furniture;
+  const { _id, title, oldPrice, newPrice, images } = furniture;
 
-  const isFavourite = favourites?.includes(slug);
+  const isFavourite = favourites?.includes(_id);
 
   return (
     <div className="relative rounded-md shadow-md overflow-hidden">
       <div className="relative h-[400px] w-full">
-        <Link href={`/furniture/${slug}`}>
+        <Link href={`/furniture/${_id}`}>
           <a>
             <Image
               className="w-full h-full"
-              src={images[0].url}
-              alt={name}
+              src={images[0]}
+              alt={title}
               layout="fill"
               objectFit="cover"
               loading="lazy"
@@ -33,10 +33,10 @@ export const FurnitureCard = ({ furniture }) => {
       </div>
 
       <div className="flex flex-col items-center justify-center p-5">
-        <Link href={`/furniture/${slug}`}>
+        <Link href={`/furniture/${_id}`}>
           <a>
             <h2 className="text-xl font-semibold tracking-wider text-center">
-              {name}
+              {title}
             </h2>
           </a>
         </Link>
@@ -48,13 +48,13 @@ export const FurnitureCard = ({ furniture }) => {
           €{newPrice}
         </p>
 
-        <Button variant="primary-btn" onClick={() => addToCart(slug)}>
+        <Button variant="primary-btn" onClick={() => addToCart(_id)}>
           В корзину
         </Button>
       </div>
 
       <Button
-        onClick={() => toggleFavourite(slug)}
+        onClick={() => toggleFavourite(_id)}
         variant="icon"
         className="absolute top-2 right-2"
       >
