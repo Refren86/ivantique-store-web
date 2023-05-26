@@ -33,7 +33,7 @@ module.exports = {
     },
     keyframes: {
       'fade-in-out': {
-        '0%, 90%': {
+        '0%, 100%': {
           opacity: 0,
         },
         '20%, 70%': {

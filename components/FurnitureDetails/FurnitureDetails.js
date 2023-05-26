@@ -7,15 +7,13 @@ import { CartContext } from 'context';
 import { uid } from 'helpers';
 import { Button } from 'components/Button';
 
-export const FurnitureDetails = ({ furnitures }) => {
+export const FurnitureDetails = ({ furniture }) => {
   const router = useRouter();
   const { cart, addToCart } = useContext(CartContext);
 
-  const [furniture] = furnitures;
-
   const {
-    name,
-    slug,
+    _id,
+    title,
     images,
     description,
     oldPrice,
@@ -25,22 +23,22 @@ export const FurnitureDetails = ({ furnitures }) => {
     depth,
     height,
     width,
-    manufactorer,
+    country,
     style,
   } = furniture;
 
   const handleBuy = () => {
-    if (cart.includes(slug)) {
+    if (cart.includes(_id)) {
       router.push('/cart?buy=true');
     } else {
-      addToCart(slug)
+      addToCart(_id);
       router.push('/cart?buy=true');
     }
-  }
+  };
 
   return (
     <div className="wrapper mt-4">
-      <h2 className="text-3xl font-bold mb-4">{name}</h2>
+      <h2 className="text-3xl font-bold mb-4">{title}</h2>
 
       <div className="relative flex flex-col lg:flex-row justify-between gap-x-8">
         <Carousel
@@ -56,10 +54,10 @@ export const FurnitureDetails = ({ furnitures }) => {
           animationHandler="fade"
           className="flex-[3] overflow-x-auto"
           renderThumbs={() =>
-            images.map((img) => (
+            images?.map((img) => (
               <Image
-                key={img.url}
-                src={img.url}
+                key={img}
+                src={img}
                 alt="furniture"
                 width={80}
                 height={46}
@@ -70,12 +68,11 @@ export const FurnitureDetails = ({ furnitures }) => {
               />
             ))
           }
-          
         >
           {images.map((image) => (
             <div className="relative w-full h-[600px]" key={uid()}>
               <Image
-                src={image.url}
+                src={image}
                 alt="furniture"
                 layout="fill"
                 objectFit="cover"
@@ -110,9 +107,15 @@ export const FurnitureDetails = ({ furnitures }) => {
           </h3>
 
           <div className="mt-6">
-            <Button variant="secondary-btn" onClick={handleBuy}>Купити</Button>
+            <Button variant="secondary-btn" onClick={handleBuy}>
+              Купити
+            </Button>
 
-            <Button className="ml-4" variant="primary-btn" onClick={() => addToCart(slug)}>
+            <Button
+              className="ml-4"
+              variant="primary-btn"
+              onClick={() => addToCart(_id)}
+            >
               В корзину
             </Button>
           </div>
@@ -138,7 +141,7 @@ export const FurnitureDetails = ({ furnitures }) => {
             </tr>
             <tr className="flex p-3">
               <td className="flex-1 font-semibold text-lg">Виробництво</td>
-              <td className="flex-1 text-lg">{manufactorer.name}</td>
+              <td className="flex-1 text-lg">{country.name}</td>
             </tr>
             <tr className="flex bg-grey-300 p-3">
               <td className="flex-1 font-semibold text-lg">Стиль</td>
@@ -148,7 +151,7 @@ export const FurnitureDetails = ({ furnitures }) => {
               <td className="flex-1 font-semibold text-lg">
                 Період виробництва
               </td>
-              <td className="flex-1 text-lg">{century.value} ст</td>
+              <td className="flex-1 text-lg">{century.name} ст</td>
             </tr>
             <tr className="flex bg-grey-300 p-3">
               <td className="flex-1 font-semibold text-lg">Глибина (см)</td>

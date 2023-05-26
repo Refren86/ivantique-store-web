@@ -1,4 +1,5 @@
 import { dbConnection } from 'lib/db';
+import CategoryModel from 'models/Category.model';
 import FurnitureModel from 'models/Furniture.model';
 
 export default async function handler(req, res) {
@@ -21,6 +22,7 @@ export default async function handler(req, res) {
     const furnitureData = req.body;
 
     const {
+      images,
       title,
       description,
       oldPrice,
@@ -31,8 +33,8 @@ export default async function handler(req, res) {
       style,
       century,
       country,
+      category,
       materials,
-      images,
     } = JSON.parse(furnitureData);
 
     try {
@@ -48,7 +50,12 @@ export default async function handler(req, res) {
         style,
         century,
         country,
+        category,
         materials,
+      });
+
+      await CategoryModel.findByIdAndUpdate(category, {
+        $push: { furniture: newFurniture._id },
       });
 
       res.json({

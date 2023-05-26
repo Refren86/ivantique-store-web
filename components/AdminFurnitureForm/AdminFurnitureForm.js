@@ -153,9 +153,6 @@ export const AdminFurnitureForm = ({ options }) => {
     });
   };
 
-  console.log(`options >>>`, options);
-  console.log(`selectedOptions >>>`, selectedOptions);
-
   return (
     <form
       onSubmit={handleSubmit(onSubmit)}

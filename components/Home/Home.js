@@ -29,7 +29,7 @@ export const Home = ({ slides, categories }) => {
           >
             <Image
               className="brightness-50"
-              src={slide.image.url}
+              src={slide.image}
               alt="furniture"
               layout="fill"
               objectFit="cover"
@@ -48,16 +48,18 @@ export const Home = ({ slides, categories }) => {
 
         <div className="grid gap-6 sm:grid-cols-2 md:grid-cols-3">
           {categories?.map((category) => (
-            <Link href={`/${category.slug}`} key={uid()}>
+            <Link href={`/${category._id}`} key={uid()}>
               <a>
                 <div className="group relative h-[300px] rounded-md shadow-xl overflow-hidden">
-                  <div
-                    style={{ backgroundImage: `url(${category.image.url})` }}
-                    className="h-full bg-cover bg-center transition-all ease-in-out duration-500 group-hover:scale-110"
+                  <Image
+                    className="transition-all ease-in-out duration-500 group-hover:scale-110"
+                    src={category.image}
+                    layout="fill"
+                    objectFit="cover"
                   />
 
                   <h3 className="absolute p-3 opacity-70 bg-black top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 text-center text-2xl font-bold text-white rounded-md tracking-wider transition-opacity ease-in-out duration-500 group-hover:opacity-100">
-                    {category.name}
+                    {category.title}
                   </h3>
                 </div>
               </a>
