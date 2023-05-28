@@ -5,7 +5,7 @@ import { useContext } from 'react';
 import { Button } from 'components/Button';
 import { FavouritesContext, CartContext } from 'context';
 
-export const FurnitureCard = ({ furniture }) => {
+export const FurnitureCard = ({ furniture, isAdmin = false }) => {
   const { addToCart } = useContext(CartContext);
   const { favourites, toggleFavourite } = useContext(FavouritesContext);
 
@@ -48,27 +48,35 @@ export const FurnitureCard = ({ furniture }) => {
           €{newPrice}
         </p>
 
-        <Button variant="primary-btn" onClick={() => addToCart(_id)}>
-          В корзину
-        </Button>
+        {isAdmin ? (
+          <Button variant="error-btn" onClick={() => {}}>
+            Видалити
+          </Button>
+        ) : (
+          <Button variant="primary-btn" onClick={() => addToCart(_id)}>
+            В корзину
+          </Button>
+        )}
       </div>
 
-      <Button
-        onClick={() => toggleFavourite(_id)}
-        variant="icon"
-        className="absolute top-2 right-2"
-      >
-        <Image
-          src={
-            isFavourite
-              ? '/icons/common/heart-filled.svg'
-              : '/icons/common/heart.svg'
-          }
-          alt="heart"
-          width={28}
-          height={28}
-        />
-      </Button>
+      {!isAdmin && (
+        <Button
+          onClick={() => toggleFavourite(_id)}
+          variant="icon"
+          className="absolute top-2 right-2"
+        >
+          <Image
+            src={
+              isFavourite
+                ? '/icons/common/heart-filled.svg'
+                : '/icons/common/heart.svg'
+            }
+            alt="heart"
+            width={28}
+            height={28}
+          />
+        </Button>
+      )}
     </div>
   );
 };

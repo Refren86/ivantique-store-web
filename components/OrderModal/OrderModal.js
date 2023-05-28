@@ -37,7 +37,7 @@ export const OrderModal = ({
           placeholder="Ваше ім'я"
           register={register}
           errors={errors}
-          required
+          options={{ required: true }}
         />
         <Input
           id="clientPhone"
@@ -46,7 +46,7 @@ export const OrderModal = ({
           register={register}
           errors={errors}
           defaultValue="+380"
-          required
+          options={{ required: true }}
         />
 
         <textarea

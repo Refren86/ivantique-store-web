@@ -122,4 +122,6 @@ const AddOptionsPage = () => {
   );
 };
 
+AddOptionsPage.auth = true;
+
 export default AddOptionsPage;

@@ -3,7 +3,7 @@ import {
   AdminFurnitureForm,
 } from 'components';
 
-export const getServerSideProps = async () => {
+export const getStaticProps = async () => {
   const data = await fetch(`http://localhost:3000/api/admin/get-options`).then(
     (res) => res.json()
   );
@@ -18,6 +18,7 @@ export const getServerSideProps = async () => {
         categories: data.categories,
       },
     },
+    revalidate: 60, // Number of seconds before revalidating the data
   };
 };
 
@@ -28,5 +29,7 @@ const AddFurniturePage = ({ options }) => {
     </AdminLayout>
   );
 };
+
+AddFurniturePage.auth = true;
 
 export default AddFurniturePage;

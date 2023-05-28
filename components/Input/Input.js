@@ -5,6 +5,7 @@ export const Input = ({
   onChange,
   label,
   required,
+  options,
   ...otherProps
 }) => {
   return (
@@ -14,7 +15,7 @@ export const Input = ({
         name={id}
         onChange={onChange}
         className="peer px-2 h-10 w-full border-b-2 border-grey-400 text-grey-900 placeholder-transparent focus:outline-none focus:border-secondary-500"
-        {...register?.(id, { required })}
+        {...register?.(id, { ...options })}
         {...otherProps}
       />
 

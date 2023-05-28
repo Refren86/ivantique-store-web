@@ -3,7 +3,7 @@ import { useForm } from 'react-hook-form';
 
 import { AdminLayout, Button, ImageDropbox, Input } from 'components';
 
-export const getServerSideProps = async () => {
+export const getStaticProps = async () => {
   const { categories } = await fetch(
     'http://localhost:3000/api/admin/get-categories'
   ).then((res) => res.json());
@@ -12,6 +12,7 @@ export const getServerSideProps = async () => {
     props: {
       categoriesData: categories,
     },
+    revalidate: 60, // Number of seconds before revalidating the data
   };
 };
 
@@ -141,5 +142,7 @@ const EditCategoriesPage = ({ categoriesData }) => {
     </AdminLayout>
   );
 };
+
+EditCategoriesPage.auth = true;
 
 export default EditCategoriesPage;
