@@ -1,6 +1,10 @@
 import { dbConnection } from 'lib/db';
 import CategoryModel from 'models/Category.model';
 import FurnitureModel from 'models/Furniture.model';
+import StyleModel from 'models/Style.model';
+import CenturyModel from 'models/Century.model';
+import CountryModel from 'models/Country.model';
+import MaterialModel from 'models/Material.model';
 
 export default async function handler(req, res) {
   await dbConnection();
@@ -58,9 +62,38 @@ export default async function handler(req, res) {
         $push: { furniture: newFurniture._id },
       });
 
-      res.json({
+      res.status(200).json({
         message: 'Furniture created successfully',
         data: newFurniture,
+      });
+    } catch (error) {
+      res.status(500).json({ message: error.message });
+    }
+  } else if (req.method === 'PATCH') {
+    const { furnitureId, ...updatedFields } = req.body;
+
+    try {
+      const updatedFurniture = await FurnitureModel.findByIdAndUpdate(
+        furnitureId,
+        { ...updatedFields },
+        { new: true }
+      );
+
+      res.status(201).json({
+        message: 'Furniture updated successfully',
+        furniture: updatedFurniture,
+      });
+    } catch (error) {
+      res.status(500).json({ message: error.message });
+    }
+  } else if (req.method === 'DELETE') {
+    try {
+      const furnitureId = JSON.parse(req.body);
+
+      await FurnitureModel.findByIdAndDelete(furnitureId);
+
+      res.status(200).json({
+        message: 'Furniture deleted successfully',
       });
     } catch (error) {
       res.status(500).json({ message: error.message });

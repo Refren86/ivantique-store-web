@@ -1,12 +1,12 @@
 import { Home, Layout } from 'components';
 
-export async function getServerSideProps() {
-  const getSlides = fetch('http://localhost:3000/api/admin/get-slides').then(
+export async function getStaticProps() {
+  const getSlides = fetch('http://localhost:3000/api/admin/slides').then(
     (res) => res.json()
   );
 
   const getCategories = fetch(
-    'http://localhost:3000/api/admin/get-categories'
+    'http://localhost:3000/api/admin/categories'
   ).then((res) => res.json());
 
   const [{ slides }, { categories }] = await Promise.all([
@@ -19,6 +19,7 @@ export async function getServerSideProps() {
       slides,
       categories,
     },
+    revalidate: 60,
   };
 }
 

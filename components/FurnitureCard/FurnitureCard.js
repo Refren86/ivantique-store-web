@@ -5,7 +5,12 @@ import { useContext } from 'react';
 import { Button } from 'components/Button';
 import { FavouritesContext, CartContext } from 'context';
 
-export const FurnitureCard = ({ furniture, isAdmin = false }) => {
+export const FurnitureCard = ({
+  furniture,
+  isAdmin = false,
+  deleteFurniture,
+  updateToSold,
+}) => {
   const { addToCart } = useContext(CartContext);
   const { favourites, toggleFavourite } = useContext(FavouritesContext);
 
@@ -49,9 +54,22 @@ export const FurnitureCard = ({ furniture, isAdmin = false }) => {
         </p>
 
         {isAdmin ? (
-          <Button variant="error-btn" onClick={() => {}}>
-            Видалити
-          </Button>
+          <div className="flex flex-col gap-y-2 items-center">
+            <Button
+              variant="secondary-btn"
+              onClick={() => updateToSold(furniture._id)}
+              disabled={!furniture.inStock}
+            >
+              Вже продано
+            </Button>
+
+            <Button
+              variant="error-btn"
+              onClick={() => deleteFurniture(furniture)}
+            >
+              Видалити
+            </Button>
+          </div>
         ) : (
           <Button variant="primary-btn" onClick={() => addToCart(_id)}>
             В корзину

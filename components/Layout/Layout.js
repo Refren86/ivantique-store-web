@@ -1,5 +1,3 @@
-import { Toaster } from 'react-hot-toast';
-
 import { Meta } from 'components/Meta';
 import { Header } from 'components/Header';
 import { Footer } from 'components/Footer';
@@ -33,8 +31,6 @@ export const Layout = ({
         <main className="relative flex-1">{children}</main>
         <Footer />
       </div>
-
-      <Toaster />
     </>
   );
 };

@@ -12,4 +12,8 @@ const successToast = (text, duration = 4000) =>
 const errorToast = (text) =>
   toast.error((t) => <span onClick={() => toast.dismiss(t.id)}>{text}</span>);
 
-export { uid, successToast, errorToast };
+const extractPublicIdFromUrl = (url, folder) => {
+  return folder + '/' + url.split('/').at(-1).split('.')[0];
+};
+
+export { uid, successToast, errorToast, extractPublicIdFromUrl };

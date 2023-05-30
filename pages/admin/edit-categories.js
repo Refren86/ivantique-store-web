@@ -5,7 +5,7 @@ import { AdminLayout, Button, ImageDropbox, Input } from 'components';
 
 export const getStaticProps = async () => {
   const { categories } = await fetch(
-    'http://localhost:3000/api/admin/get-categories'
+    'http://localhost:3000/api/admin/categories'
   ).then((res) => res.json());
 
   return {
@@ -76,7 +76,7 @@ const EditCategoriesPage = ({ categoriesData }) => {
         body: formData,
       }).then((res) => res.json());
 
-      const { category: newCategory } = await fetch('/api/admin/add-category', {
+      const { category: newCategory } = await fetch('/api/admin/categories', {
         method: 'post',
         body: JSON.stringify({ title: data.title, image: images[0] }),
       }).then((res) => res.json());
@@ -89,6 +89,22 @@ const EditCategoriesPage = ({ categoriesData }) => {
       handleRemoveImage();
       reset();
     }
+  };
+
+  const handleDelete = async (category) => {
+    await fetch('/api/images/delete', {
+      method: 'delete',
+      body: JSON.stringify({ images: [category.image], folder: 'categories' }),
+    }).then((res) => res.json());
+
+    await fetch('/api/admin/categories', {
+      method: 'delete',
+      body: JSON.stringify(category._id),
+    }).then((res) => res.json());
+
+    setCategories((prevCategories) =>
+      prevCategories.filter((c) => c._id !== category._id)
+    );
   };
 
   return (
@@ -107,7 +123,12 @@ const EditCategoriesPage = ({ categoriesData }) => {
               <ImageDropbox image={category.image} />
 
               <div className="text-end mt-3">
-                <Button variant="error-btn">Видалити</Button>
+                <Button
+                  variant="error-btn"
+                  onClick={() => handleDelete(category)}
+                >
+                  Видалити
+                </Button>
               </div>
             </div>
           ))}

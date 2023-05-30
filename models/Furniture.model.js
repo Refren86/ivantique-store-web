@@ -33,6 +33,10 @@ const furnitureSchema = new mongoose.Schema(
         type: String,
       },
     ],
+    inStock: {
+      type: Boolean,
+      default: true,
+    },
     style: {
       type: mongoose.Schema.Types.ObjectId,
       ref: 'style',

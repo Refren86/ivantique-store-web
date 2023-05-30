@@ -251,7 +251,7 @@ export const AdminFurnitureForm = ({ options }) => {
 
       <div className="flex justify-between items-center my-4">
         <h4 className="text-lg">Оберіть фото</h4>
-        <Button onClick={clearImages} className="text-primary-400">
+        <Button type='button' onClick={clearImages} className="text-primary-400">
           Очистити
         </Button>
       </div>

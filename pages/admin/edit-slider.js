@@ -4,17 +4,15 @@ import { useForm } from 'react-hook-form';
 import { AdminLayout, Button, ImageDropbox, Input } from 'components';
 
 export const getStaticProps = async () => {
-  const slidesData = await fetch(
-    'http://localhost:3000/api/admin/get-slides'
-  ).then((res) => res.json());
-
-  console.log(`slidesData >>>`, slidesData);
+  const slidesData = await fetch('http://localhost:3000/api/admin/slides').then(
+    (res) => res.json()
+  );
 
   return {
     props: {
       slidesData: slidesData.slides,
     },
-    revalidate: 60
+    revalidate: 60,
   };
 };
 
@@ -78,7 +76,7 @@ const EditSliderPage = ({ slidesData }) => {
         body: formData,
       }).then((res) => res.json());
 
-      const { slide: newSlide } = await fetch('/api/admin/add-slide', {
+      const { slide: newSlide } = await fetch('/api/admin/slides', {
         method: 'post',
         body: JSON.stringify({ title: data.title, image: images[0] }),
       }).then((res) => res.json());
@@ -88,6 +86,20 @@ const EditSliderPage = ({ slidesData }) => {
       handleRemoveImage();
       reset();
     }
+  };
+
+  const handleDelete = async (slide) => {
+    await fetch('/api/images/delete', {
+      method: 'delete',
+      body: JSON.stringify({ images: [slide.image], folder: 'slides' }),
+    }).then((res) => res.json());
+
+    await fetch('/api/admin/slides', {
+      method: 'delete',
+      body: JSON.stringify(slide._id),
+    }).then((res) => res.json());
+
+    setSlides((prevSlides) => prevSlides.filter((s) => s._id !== slide._id));
   };
 
   return (
@@ -111,7 +123,9 @@ const EditSliderPage = ({ slidesData }) => {
               />
 
               <div className="text-end mt-3">
-                <Button variant="error-btn">Видалити</Button>
+                <Button onClick={() => handleDelete(slide)} variant="error-btn">
+                  Видалити
+                </Button>
               </div>
             </div>
           ))}

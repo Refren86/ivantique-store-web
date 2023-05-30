@@ -1,14 +1,40 @@
 import Link from 'next/link';
 
-import { Button } from 'components';
+import { Button, Meta } from 'components';
+import { signOut } from 'next-auth/react';
 
-export const AdminLayout = ({ children }) => {
+export const AdminLayout = ({
+  children,
+  title,
+  keywords,
+  description,
+  ogTitle,
+  ogDescription,
+  ogType,
+  ogUrl,
+  ogImage,
+}) => {
+  const logout = () => {
+    signOut();
+  }
+
   return (
     <>
+      <Meta
+        title={title}
+        keywords={keywords}
+        description={description}
+        ogTitle={ogTitle}
+        ogDescription={ogDescription}
+        ogType={ogType}
+        ogUrl={ogUrl}
+        ogImage={ogImage}
+      />
+
       <header className="h-20 bg-primary-600 flex items-center justify-between px-4">
         <h2 className="text-white font-bold text-2xl">Ivantique admin</h2>
 
-        <Button variant="primary-btn-contained">Вийти</Button>
+        <Button variant="primary-btn-contained" onClick={logout}>Вийти</Button>
       </header>
 
       <div className="grid grid-cols-[1fr_80%] min-h-[calc(100vh-80px)]">
