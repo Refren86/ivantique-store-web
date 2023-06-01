@@ -1,7 +1,7 @@
 import { Home, Layout } from 'components';
 import { secrets } from 'utils/constants';
 
-export async function getStaticProps() {
+export async function getServerSideProps() {
   const getSlides = fetch(secrets.BASE_URL + '/api/admin/slides').then((res) =>
     res.json()
   );
@@ -20,7 +20,6 @@ export async function getStaticProps() {
       slides,
       categories,
     },
-    revalidate: 60,
   };
 }
 

@@ -1,28 +1,37 @@
-import { useRef, useState } from 'react';
 import { useForm } from 'react-hook-form';
+import { useEffect, useRef, useState } from 'react';
 
-import { secrets } from 'utils/constants';
+import { loadSlides } from 'lib/api';
 import { AdminLayout, Button, ImageDropbox, Input } from 'components';
 
-export const getStaticProps = async () => {
-  const slidesData = await fetch(secrets.BASE_URL + '/api/admin/slides').then(
-    (res) => res.json()
-  );
+// export const getStaticProps = async () => {
+//   const slidesData = await fetch(secrets.BASE_URL + '/api/admin/slides').then(
+//     (res) => res.json()
+//   );
 
-  return {
-    props: {
-      slidesData: slidesData.slides,
-    },
-    revalidate: 60,
-  };
-};
+//   return {
+//     props: {
+//       slidesData: slidesData.slides,
+//     },
+//     revalidate: 60,
+//   };
+// };
 
-const EditSliderPage = ({ slidesData }) => {
+const EditSliderPage = () => {
   const fileInputRef = useRef(null);
   const { register, handleSubmit, reset } = useForm();
 
-  const [slides, setSlides] = useState(slidesData || []);
+  const [slides, setSlides] = useState([]);
   const [newSliderImg, setNewSliderImg] = useState('');
+
+  useEffect(() => {
+    const getSlides = async () => {
+      const data = await loadSlides();
+      setSlides(data.slides);
+    };
+
+    getSlides();
+  }, []);
 
   const handleDrop = (event) => {
     event.preventDefault();

@@ -1,28 +1,37 @@
-import { useRef, useState } from 'react';
+import { useEffect, useRef, useState } from 'react';
 import { useForm } from 'react-hook-form';
 
+import { loadCategories } from 'lib/api';
 import { AdminLayout, Button, ImageDropbox, Input } from 'components';
-import { secrets } from 'utils/constants';
 
-export const getStaticProps = async () => {
-  const { categories } = await fetch(
-    secrets.BASE_URL + '/api/admin/categories'
-  ).then((res) => res.json());
+// export const getStaticProps = async () => {
+//   const { categories } = await fetch(
+//     secrets.BASE_URL + '/api/admin/categories'
+//   ).then((res) => res.json());
 
-  return {
-    props: {
-      categoriesData: categories,
-    },
-    revalidate: 60, // Number of seconds before revalidating the data
-  };
-};
+//   return {
+//     props: {
+//       categoriesData: categories,
+//     },
+//     revalidate: 60, // Number of seconds before revalidating the data
+//   };
+// };
 
-const EditCategoriesPage = ({ categoriesData }) => {
+const EditCategoriesPage = () => {
   const fileInputRef = useRef(null);
   const { register, handleSubmit, reset } = useForm();
 
-  const [categories, setCategories] = useState(categoriesData || []);
+  const [categories, setCategories] = useState([]);
   const [newCategoryImg, setNewCategoryImg] = useState('');
+
+  useEffect(() => {
+    const getCategories = async () => {
+      const data = await loadCategories();
+      setCategories(data.categories);
+    }
+
+    getCategories();
+  }, [])
 
   const handleDrop = (event) => {
     event.preventDefault();

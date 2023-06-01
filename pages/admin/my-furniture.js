@@ -1,24 +1,34 @@
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import { useSession } from 'next-auth/react';
+
+import { loadFurniture } from 'lib/api';
 import { AdminLayout, FurnitureCard } from 'components';
-import { secrets } from 'utils/constants';
 
-export const getStaticProps = async () => {
-  const furnitureData = await fetch(
-    secrets.BASE_URL + '/api/admin/furniture'
-  ).then((res) => res.json());
+// export const getStaticProps = async () => {
+//   const furnitureData = await fetch(
+//     secrets.BASE_URL + '/api/admin/furniture'
+//   ).then((res) => res.json());
 
-  return {
-    props: {
-      furnitureData,
-    },
-    revalidate: 60,
-  };
-};
+//   return {
+//     props: {
+//       furnitureData,
+//     },
+//     revalidate: 60,
+//   };
+// };
 
-const MyFurniturePage = ({ furnitureData }) => {
+const MyFurniturePage = () => {
   const { data: session } = useSession();
-  const [furniture, setFurniture] = useState(furnitureData);
+  const [furniture, setFurniture] = useState([]);
+
+  useEffect(() => {
+    const getFurniture = async () => {
+      const data = await loadFurniture();
+      setFurniture(data);
+    };
+
+    getFurniture();
+  }, []);
 
   const isAdmin = session.user.role === 'admin';
 
