@@ -1,10 +1,11 @@
 import { Furnitures, Layout, ReturnLink, Title } from 'components';
+import { secrets } from 'utils/constants';
 
 export async function getServerSideProps(context) {
   const { params } = context;
 
   const { category } = await fetch(
-    `http://localhost:3000/api/category/${params.category}`
+    `${secrets.BASE_URL}/api/category/${params.category}`
   ).then((res) => res.json());
 
   return {

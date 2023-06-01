@@ -2,9 +2,10 @@ import {
   AdminLayout,
   AdminFurnitureForm,
 } from 'components';
+import { secrets } from 'utils/constants';
 
 export const getStaticProps = async () => {
-  const data = await fetch(`http://localhost:3000/api/admin/get-options`).then(
+  const data = await fetch(`${secrets.BASE_URL}/api/admin/get-options`).then(
     (res) => res.json()
   );
 

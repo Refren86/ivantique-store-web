@@ -1,13 +1,14 @@
 import { Home, Layout } from 'components';
+import { secrets } from 'utils/constants';
 
 export async function getStaticProps() {
-  const getSlides = fetch('http://localhost:3000/api/admin/slides').then(
-    (res) => res.json()
+  const getSlides = fetch(secrets.BASE_URL + '/api/admin/slides').then((res) =>
+    res.json()
   );
 
-  const getCategories = fetch(
-    'http://localhost:3000/api/admin/categories'
-  ).then((res) => res.json());
+  const getCategories = fetch(secrets.BASE_URL + '/api/admin/categories').then(
+    (res) => res.json()
+  );
 
   const [{ slides }, { categories }] = await Promise.all([
     getSlides,

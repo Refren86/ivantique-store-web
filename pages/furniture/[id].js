@@ -1,13 +1,12 @@
 import { FurnitureDetails, Layout, Title } from 'components';
+import { secrets } from 'utils/constants';
 
 export async function getServerSideProps(context) {
   const { params } = context;
 
   const { furniture } = await fetch(
-    `http://localhost:3000/api/furniture/${params.id}`
+    `${secrets.BASE_URL}/api/furniture/${params.id}`
   ).then((res) => res.json());
-
-  console.log(`furniture >>>`, furniture);
 
   return {
     props: {

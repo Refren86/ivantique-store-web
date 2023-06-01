@@ -1,10 +1,11 @@
 import { useRef, useState } from 'react';
 import { useForm } from 'react-hook-form';
 
+import { secrets } from 'utils/constants';
 import { AdminLayout, Button, ImageDropbox, Input } from 'components';
 
 export const getStaticProps = async () => {
-  const slidesData = await fetch('http://localhost:3000/api/admin/slides').then(
+  const slidesData = await fetch(secrets.BASE_URL + '/api/admin/slides').then(
     (res) => res.json()
   );
 

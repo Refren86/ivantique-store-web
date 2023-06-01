@@ -1,10 +1,11 @@
 import { useState } from 'react';
 import { useSession } from 'next-auth/react';
 import { AdminLayout, FurnitureCard } from 'components';
+import { secrets } from 'utils/constants';
 
 export const getStaticProps = async () => {
   const furnitureData = await fetch(
-    'http://localhost:3000/api/admin/furniture'
+    secrets.BASE_URL + '/api/admin/furniture'
   ).then((res) => res.json());
 
   return {

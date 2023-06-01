@@ -2,10 +2,11 @@ import { useRef, useState } from 'react';
 import { useForm } from 'react-hook-form';
 
 import { AdminLayout, Button, ImageDropbox, Input } from 'components';
+import { secrets } from 'utils/constants';
 
 export const getStaticProps = async () => {
   const { categories } = await fetch(
-    'http://localhost:3000/api/admin/categories'
+    secrets.BASE_URL + '/api/admin/categories'
   ).then((res) => res.json());
 
   return {
