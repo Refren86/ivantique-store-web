@@ -32,7 +32,7 @@ export const Dropdown = ({
     }
   }, []);
 
-  const fullSelectedOption = options.find(
+  const fullSelectedOption = options?.length > 0 && options.find(
     (option) => option._id === selectedOption
   );
 
