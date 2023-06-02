@@ -7,6 +7,8 @@ import MaterialModel from 'models/Material.model';
 import CategoryModel from 'models/Category.model';
 
 export default async function handler(req, res) {
+  res.setHeader('Access-Control-Allow-Origin', process.env.BASE_URL);
+
   if (req.method === 'GET') {
     await dbConnection();
 
@@ -16,14 +18,17 @@ export default async function handler(req, res) {
     const getMaterials = MaterialModel.find();
     const getCategories = CategoryModel.find();
 
-    const [styles, centuries, countries, materials, categories] = await Promise.all([
-      getStyles,
-      getCenturies,
-      getCountries,
-      getMaterials,
-      getCategories
-    ]);
+    const [styles, centuries, countries, materials, categories] =
+      await Promise.all([
+        getStyles,
+        getCenturies,
+        getCountries,
+        getMaterials,
+        getCategories,
+      ]);
 
-    res.status(200).json({ styles, centuries, countries, materials, categories });
+    res
+      .status(200)
+      .json({ styles, centuries, countries, materials, categories });
   }
 }

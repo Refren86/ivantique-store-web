@@ -7,8 +7,9 @@ import CountryModel from 'models/Country.model';
 import MaterialModel from 'models/Material.model';
 
 export default async function handler(req, res) {
+  res.setHeader('Access-Control-Allow-Origin', process.env.BASE_URL)
   await dbConnection();
-
+  
   if (req.method === 'GET') {
     try {
       const furniture = await FurnitureModel.find().populate([
@@ -79,11 +80,13 @@ export default async function handler(req, res) {
         { new: true }
       );
 
+      res.setHeader('Access-Control-Allow-Origin', process.env.BASE_URL)
       res.status(201).json({
         message: 'Furniture updated successfully',
         furniture: updatedFurniture,
       });
     } catch (error) {
+      res.setHeader('Access-Control-Allow-Origin', process.env.BASE_URL)
       res.status(500).json({ message: error.message });
     }
   } else if (req.method === 'DELETE') {

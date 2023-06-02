@@ -3,7 +3,9 @@ import { dbConnection } from 'lib/db';
 import SlideModel from 'models/Slide.model';
 
 export default async function handler(req, res) {
+  res.setHeader('Access-Control-Allow-Origin', process.env.BASE_URL);
   await dbConnection();
+
   if (req.method === 'GET') {
     const slides = await SlideModel.find();
 
