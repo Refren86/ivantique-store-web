@@ -10,6 +10,7 @@ export default NextAuth({
   session: {
     strategy: 'jwt',
   },
+  secret: process.env.NEXTAUTH_SECRET,
   callbacks: {
     async jwt({ token, user }) {
       // filling token with data from db
