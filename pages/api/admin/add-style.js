@@ -2,8 +2,6 @@ import { dbConnection } from 'lib/db';
 import StyleModel from 'models/Style.model';
 
 export default async function handler(req, res) {
-  res.setHeader('Access-Control-Allow-Origin', process.env.BASE_URL)
-  
   if (req.method === 'POST') {
     try {
       await dbConnection();

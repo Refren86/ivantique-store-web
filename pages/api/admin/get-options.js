@@ -7,8 +7,6 @@ import MaterialModel from 'models/Material.model';
 import CategoryModel from 'models/Category.model';
 
 export default async function handler(req, res) {
-  res.setHeader('Access-Control-Allow-Origin', process.env.BASE_URL);
-
   if (req.method === 'GET') {
     await dbConnection();
 

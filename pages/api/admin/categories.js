@@ -2,7 +2,6 @@ import { dbConnection } from 'lib/db';
 import CategoryModel from 'models/Category.model';
 
 export default async function handler(req, res) {
-  res.setHeader('Access-Control-Allow-Origin', process.env.BASE_URL);
   await dbConnection();
 
   if (req.method === 'GET') {
@@ -11,7 +10,6 @@ export default async function handler(req, res) {
     res.status(200).json({ categories });
   } else if (req.method === 'POST') {
     const categoryData = JSON.parse(req.body);
-    await dbConnection();
 
     const newCategory = await CategoryModel.create(categoryData);
 

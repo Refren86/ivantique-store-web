@@ -2,8 +2,6 @@ import { dbConnection } from 'lib/db';
 import CenturyModel from 'models/Century.model';
 
 export default async function handler(req, res) {
-  res.setHeader('Access-Control-Allow-Origin', process.env.BASE_URL);
-
   if (req.method === 'POST') {
     try {
       await dbConnection();

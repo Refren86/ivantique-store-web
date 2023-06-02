@@ -2,8 +2,6 @@ import { dbConnection } from 'lib/db';
 import MaterialModel from 'models/Material.model';
 
 export default async function handler(req, res) {
-  res.setHeader('Access-Control-Allow-Origin', process.env.BASE_URL);
-
   if (req.method === 'POST') {
     try {
       await dbConnection();
